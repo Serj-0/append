@@ -1,0 +1,56 @@
+.TH app 1
+
+.SH NAME
+.B app
+- append text to input.
+
+.SH SYNOPSIS
+.B app
+-[\fBbiIns\fR] [\fIFILE\fR] [\fB-m\fR|\fB--match\fR \fISTRING_PATTERN\fR] [\fISTRING\fR]...
+
+.B app
+[\fB-h\fR|\fB--help\fR]
+
+.SH DESCRIPTION
+Append text to input. If no file is given, app reads from \fBstdin\fR.
+
+.SH OPTIONS
+.nf
+.B -h | --help
+	Print help.
+
+.B -i
+	Do not append to empty lines.
+
+.B -I
+	Only append to empty lines.
+
+.B -m
+	Append to lines matching the given string pattern.
+
+.B -n
+	Append on new lines rather than end of lines.
+
+.B -s
+	Append one string per line from a sequence of strings.
+
+.SH EXAMPLES
+.nf
+	\fB$> echo meme | app dream\fR
+	meme dream
+
+	\fBIn a file f.txt\fR
+	Today, I bought a 
+	But, I didn't know what to do with that
+	So, I threw away the
+
+	\fB$> app f.txt " dell."\fR
+	Today, I bought a dell.
+	But, I didn't know what to do with that dell.
+	So, I threw away the dell.
+
+.SH COPYRIGHT
+.nf
+Copyright \[co] 2020 serj
+Published under the MIT License
+https://mit-license.org/
