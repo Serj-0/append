@@ -7,9 +7,8 @@ build:
 
 install:
 	mv app "$(BINDIR)"
-	cp app.1 _app.1
-	gzip -f _app.1
-	mv _app.1.gz "$(MANDIR)/app.1.gz"
+	gzip -f -k app.1
+	mv app.1.gz "$(MANDIR)"
 
 uninstall:
 	rm "$(BINDIR)/app" "$(MANDIR)/app.1.gz"
