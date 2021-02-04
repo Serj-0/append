@@ -19,6 +19,7 @@ void usage(){
 
 int main(int argc, char** args) {
     if(argc < 2){
+		printf("Not enough arguments\n");
         usage();
         return RETURN_BAD_ARG;
     }
@@ -36,10 +37,15 @@ int main(int argc, char** args) {
     if(ist){
         args++;
         argc--;
+		if(!argc){
+			printf("Not enough arguments\n");
+			usage();
+			return RETURN_BAD_ARG;
+		}
     }else{
         ist = stdin;
     }
-    
+
     // Switches
     bool    nline       = 0,
             ignempty    = 0,
@@ -139,10 +145,10 @@ int main(int argc, char** args) {
         //if ignempty and is not empty
         bool unempt = !ignempty || nli;
         
-        //if only empty and empty
+        //if only empty and is empty
         bool emptt = !onlyempty || !nli;
         
-        match = (!tmatch || match) && unempt && emptt;
+        match = (!tmatch || match) && unempt && emptt && (sequence ? argc : 1);
         
         // Print
         if(!appbeg) fputs(inp, stdout);

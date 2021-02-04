@@ -5,6 +5,10 @@ CFLAGS = -Wall --std=c11
 build:
 	$(CC) $(CFLAGS) main.c -o app
 
+debug:
+	$(CC) $(CFLAGS) -ggdb -c main.c
+	$(CC) $(CFLAGS) main.o -o app
+
 install:
 	mv app "$(BINDIR)"
 	gzip -f -k app.1
