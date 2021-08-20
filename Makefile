@@ -11,8 +11,8 @@ debug:
 
 install:
 	mv app "$(BINDIR)"
-	gzip -f -k app.1
-	mv app.1.gz "$(MANDIR)"
+	# gzip -f -k app.1
+	# mv app.1.gz "$(MANDIR)"
 
 uninstall:
 	rm "$(BINDIR)/app" "$(MANDIR)/app.1.gz"

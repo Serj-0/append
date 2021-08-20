@@ -1,13 +1,14 @@
 #include <stdio.h>
-//#include <sys/types.h>
 #include <string.h>
-//#include <unistd.h>
 typedef unsigned char bool;
 
 char str[BUFSIZ];
 char out[BUFSIZ];
 
 void print_append(char* src, char** app, int n, bool front);
+void usage(){
+    printf("%s", "app -[fnNs] [FILE] [STRING...]");
+}
 
 int main(int argc, char** args){
     bool    front = 0,      // append to front of input
@@ -36,12 +37,18 @@ int main(int argc, char** args){
     }
     
     //if first arg did not switch any flags, treat as append string
-    int aas = (front | nline | Nline | seqnc) != 0;
+    int aas = (front || nline || Nline || seqnc);
+    
+    /* FILE */
+    FILE* ist = fopen(args[1 + aas], "r");
+    if(!ist) ist = stdin;
+    
+    aas += (ist != stdin);
     
     /* OPERATION */
     int sqi = 0;
     
-    while(fgets(str, BUFSIZ, stdin)){
+    while(fgets(str, BUFSIZ, ist)){
         bool lt = !(nline || Nline) || (nline && str[0] == '\n') || (Nline && str[0] != '\n');
         bool st = !seqnc || (sqi + 1 + aas < argc);
         
