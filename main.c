@@ -8,7 +8,7 @@ char out[BUFSIZ];
 static inline void print_append(char* src, char** app, int n, bool front);
 
 void usage(){
-    printf("%s", "app [-fnNs] [FILE] STRING...");
+    printf("%s", "app [-fnNs] [FILE] STRING...\n");
 }
 
 int main(int argc, char** args){
@@ -52,7 +52,7 @@ int main(int argc, char** args){
     FILE* ist = fopen(args[1 + aas], "r");
     if(!ist) ist = stdin;
     
-    //if first or second are was a file, move arg index forward one
+    //if first or second are a file, move arg index forward one
     aas += (ist != stdin);
     
     /* OPERATION */
