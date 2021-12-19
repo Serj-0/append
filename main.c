@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 typedef unsigned char bool;
 
 char str[BUFSIZ];
@@ -11,6 +12,8 @@ void usage(){
     printf("%s", "app [-fnNs] [FILE] STRING...\n");
 }
 
+
+//FIXME do not treat arg as file if file cannot be opened
 int main(int argc, char** args){
     if(argc < 2 || !strcmp(args[1], "--help")){
         usage();
@@ -49,11 +52,28 @@ int main(int argc, char** args){
     int aas = (front || nline || Nline || seqnc);
     
     /* FILE */
+    
     FILE* ist = fopen(args[1 + aas], "r");
-    if(!ist) ist = stdin;
+    
+    {
+        struct stat st;
+        stat(args[1 + aas], &st);
+        
+        if(!ist || (st.st_mode & __S_IFDIR)){
+            ist = stdin;
+        }else{
+            aas++;
+        }
+    }
+    
+//    if(!ist){
+//        ist = stdin;
+//    }else{
+//        aas++;
+//    }
     
     //if first or second are a file, move arg index forward one
-    aas += (ist != stdin);
+//    aas += (ist != stdin);
     
     /* OPERATION */
     int sqi = 0;
@@ -78,6 +98,7 @@ int main(int argc, char** args){
 
 /*************************************************************************************************************/
 
+//FIXME issues with \0
 static inline void print_append(char* src, char** app, int n, bool front){
     if(!front) strncpy(out + strlen(out), src, strlen(src));
     for(int i = 0; i < n; i++){
